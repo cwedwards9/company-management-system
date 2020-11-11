@@ -2,7 +2,7 @@
 
 INSERT INTO department (name) VALUES 
 ("Finance"),
-("Software Dev."),
+("Software Development"),
 ("Sales"),
 ("Accounting");
 
