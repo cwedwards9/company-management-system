@@ -1,5 +1,3 @@
-const connection = require("./connection");
-
 const query = {
      viewAllEmployees() {
         return `SELECT e.employee_id AS id, e.first_name, e.last_name,
@@ -16,13 +14,27 @@ const query = {
                 ORDER BY e.employee_id;`;
     },
     viewAllDepts() {
-        return "SELECT dept_id AS id, name AS 'department name' FROM department;"
+        return "SELECT dept_id AS id, name FROM department;"
     },
     viewAllRoles() {
-        return `SELECT r.role_id AS id, r.title, r.salary, d.name AS department
+        return `SELECT r.role_id AS id, r.title, CONCAT('$ ', r.salary) AS salary, d.name AS department
                 FROM role r
                 INNER JOIN department d
                 ON r.department_id = d.dept_id;`;
+    },
+    viewEmployeesAndIds(){
+        return "SELECT employee_id, CONCAT(first_name, ' ', last_name) AS employee FROM employee";
+    },
+
+    // ADDING DATA
+    createRole() {
+        return "INSERT INTO role set ?";
+    },
+    createDept() {
+        return "INSERT INTO department SET ?";
+    },
+    createEmployee() {
+        return "INSERT INTO employee SET ?";
     }
 }
 
