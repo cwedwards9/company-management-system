@@ -1,6 +1,6 @@
-const Department = require("./lib/Department");
-const Role = require("./lib/Role");
 const Employee = require("./lib/Employee");
+const Role = require("./lib/Role");
+const Department = require("./lib/Department");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 const promptList = require("./promptList");
@@ -36,6 +36,9 @@ function init() {
                     console.table("Roles:", result);
                 })
             }
+            else if(answer.mainFunctions === "Add Employee"){
+                addEmployee();
+            }
             else if(answer.mainFunctions === "Add Role") {
                 addRole();
             }
@@ -44,8 +47,49 @@ function init() {
             }
         });
 
-        function addRole() {
+
+        function addEmployee() {
             inquirer.prompt(promptList[1])
+                .then(answer => {
+                    const { newEmployeeFirstName, newEmployeeLastName, newEmployeeRole, newEmployeeManager} = answer;
+
+                    var roleId;
+                    const q1 = query.viewAllRoles();
+                    connection.query(q1, (err, result) => {
+                        if(err) throw err;
+                        for(let i = 0; i < result.length; i++){
+                            if(newEmployeeRole === result[i].title){
+                                roleId = result[i].id;
+
+                                var managerId;
+                                const q2 = query.viewEmployeesAndIds();
+                                connection.query(q2, (err, result) => {
+                                    if(err) throw err;
+                                    for(let i = 0; i < result.length; i++){
+                                        if(newEmployeeManager === result[i].employee) {
+                                            managerId = result[i].employee_id;
+
+                                            const employee = new Employee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
+                                            console.log(employee);
+                                            const q3 = query.createEmployee();
+                                            connection.query(q3, employee, (err, result) => {
+                                                if(err) throw err;
+                                                console.log(newEmployeeFirstName + " was successfully inserted into the employee table!");
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+
+                });
+        }
+
+
+        function addRole() {
+            inquirer.prompt(promptList[2])
                 .then(answer => {
                     const { newRoleTitle, newRoleSalary, newRoleDept } = answer;
 
@@ -70,11 +114,11 @@ function init() {
                     });
         
                     mainMenu();
-                })
+                });
         }
 
         function addDepartment() {
-            inquirer.prompt(promptList[2])
+            inquirer.prompt(promptList[3])
             .then(answer => {
                 const { newDepartment } = answer;
 
