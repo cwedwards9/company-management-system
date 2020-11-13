@@ -13,37 +13,48 @@ function init() {
         // Gives user first prompt (from promptList.js)
         inquirer.prompt(promptList[0])
         .then(answer => {
-            if(answer.mainFunctions === "View All Employees") {
+            const { mainFunctions } = answer;
+            if(mainFunctions === "View All Employees") {
                 const q = query.viewAllEmployees();
                 connection.query(q, (err, result) => {
                     if(err) throw err;
-                    // console.log(result);
                     console.table("Employees:", result);
+
+                    consoleDelay();
                 })
             }
-            else if(answer.mainFunctions === "View All Departments") {
+            else if(mainFunctions === "View All Departments") {
                 const q = query.viewAllDepts();
                 connection.query(q, (err, result) => {
                     if(err) throw err;
-                    console.log(result);
                     console.table("Departments:", result);
+
+                    consoleDelay();
                 })
             }
-            else if(answer.mainFunctions === "View All Roles") {
+            else if(mainFunctions === "View All Roles") {
                 const q = query.viewAllRoles();
                 connection.query(q, (err, result) => {
                     if(err) throw err;
                     console.table("Roles:", result);
+
+                    consoleDelay();
                 })
             }
-            else if(answer.mainFunctions === "Add Employee"){
+            else if(mainFunctions === "Add Employee"){
                 addEmployee();
             }
-            else if(answer.mainFunctions === "Add Role") {
+            else if(mainFunctions === "Add Role") {
                 addRole();
             }
-            else if(answer.mainFunctions === "Add Department") {
+            else if(mainFunctions === "Add Department") {
                 addDepartment();
+            }
+            else if(mainFunctions === "Update Role"){
+                updateRole();
+            }
+            else if(mainFunctions === "I am finished") {
+               console.log("Please press 'ctrl + c' to exit");
             }
         });
 
@@ -70,11 +81,12 @@ function init() {
                                             managerId = result[i].employee_id;
 
                                             const employee = new Employee(newEmployeeFirstName, newEmployeeLastName, roleId, managerId);
-                                            console.log(employee);
                                             const q3 = query.createEmployee();
                                             connection.query(q3, employee, (err, result) => {
                                                 if(err) throw err;
                                                 console.log(newEmployeeFirstName + " was successfully inserted into the employee table!");
+                                            
+                                                consoleDelay();
                                             });
                                         }
                                     }
@@ -82,8 +94,6 @@ function init() {
                             }
                         }
                     });
-                    
-
                 });
         }
 
@@ -108,6 +118,8 @@ function init() {
                                 connection.query(q2, role, (err, result) => {
                                     if(err) throw err;
                                     console.log(role.title + " was successfully inserted into the role table!");
+                                
+                                    consoleDelay();
                                 });
                             }
                         }
@@ -123,19 +135,46 @@ function init() {
                 const { newDepartment } = answer;
 
                 const department = new Department(newDepartment);
-                console.log(department);
                 const q = query.createDept();
                 connection.query(q, department, (err, result) => {
                     if(err) throw err;
                     console.log(department.name + " was successfully inserted into the department table!");
                 });
 
-                mainMenu();
+                consoleDelay();
+            });
+        }
+
+        function updateRole() {
+            inquirer.prompt(promptList[4])
+            .then(answer => {
+                const { updateRole, columnUpdate, newValue } = answer;
+
+                let q;
+                if(columnUpdate === "title") {
+                    q = `UPDATE role SET ${columnUpdate} = '${newValue}' WHERE title='${updateRole}'`;
+                } else {
+                    q = `UPDATE role SET ${columnUpdate} = ${newValue} WHERE title='${updateRole}'`;
+                }
+
+                connection.query(q, (err, result) => {
+                    if(err) throw err;
+                    console.log(updateRole + " was successfully updated!");
+                
+                    consoleDelay();
+                });
             });
         }
     }
 
     mainMenu();
+
+    // Function for delaying console.log
+    function consoleDelay() {
+        setTimeout(function() {
+            mainMenu();
+        }, 2000);
+    }      
 }
 
 
