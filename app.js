@@ -118,14 +118,12 @@ function init() {
                                 connection.query(q2, role, (err, result) => {
                                     if(err) throw err;
                                     console.log(role.title + " was successfully inserted into the role table!");
-                                
-                                    consoleDelay();
                                 });
                             }
                         }
                     });
         
-                    mainMenu();
+                    consoleDelay();
                 });
         }
 
@@ -173,7 +171,7 @@ function init() {
     function consoleDelay() {
         setTimeout(function() {
             mainMenu();
-        }, 2000);
+        }, 1500);
     }      
 }
 
