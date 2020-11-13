@@ -14,13 +14,14 @@ const query = {
                 ORDER BY e.employee_id;`;
     },
     viewAllDepts() {
-        return "SELECT dept_id AS id, name FROM department;"
+        return "SELECT dept_id AS id, name FROM department ORDER BY dept_id;"
     },
     viewAllRoles() {
         return `SELECT r.role_id AS id, r.title, CONCAT('$ ', r.salary) AS salary, d.name AS department
                 FROM role r
                 INNER JOIN department d
-                ON r.department_id = d.dept_id;`;
+                ON r.department_id = d.dept_id
+                ORDER BY r.role_id;`;
     },
     viewEmployeesAndIds(){
         return "SELECT employee_id, CONCAT(first_name, ' ', last_name) AS employee FROM employee";
