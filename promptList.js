@@ -35,6 +35,7 @@ connection.query(q3, (err, result) => {
 
 
 const promptList = [
+    // Prompt 0. - Prompting user to perform a certain function
     {
         type: "list",
         message: "What would you like to do?",
@@ -46,11 +47,11 @@ const promptList = [
             "Add Employee",
             "Add Role",
             "Add Department",
+            "Update Role",
             "I am finished"
         ]
     },
-
-    
+    // Prompt 1. - Prompting user for data to create a new employee
     [
         {
             type: "input",
@@ -75,8 +76,7 @@ const promptList = [
             choices: managersArray
         }
     ],
-
-
+    // Prompt 2. - Prompting user for data to create a new role
     [
         {
             type: "input",
@@ -95,13 +95,33 @@ const promptList = [
             choices: deptArray
         }
     ],
-
-
+    // Prompt 3. - Prompting a user for data to create a new department
     {
         type: "input",
         message: "What is the name of the new department?",
         name: "newDepartment"
-    }
+    },
+    // Prompt 4. - Prompting a user to update a role
+    [
+        {
+            type: "list",
+            message: "What is the title of role you want to update?",
+            name: "updateRole",
+            choices: rolesArray
+        },
+        {
+            type: "list",
+            message: "What column do you want to update in this role?",
+            name: "columnUpdate",
+            choices: ["title", "salary", "department_id"]
+        },
+        {
+            type: "input",
+            message: "What do you want the new value to be?",
+            name: "newValue"
+        }
+        
+    ]
 
     
 ];
