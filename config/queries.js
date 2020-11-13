@@ -35,6 +35,14 @@ const query = {
     },
     createEmployee() {
         return "INSERT INTO employee SET ?";
+    },
+
+    // READ data for use in promptList.js
+    getRolesList() {
+        return "SELECT title FROM role";
+    },
+    getManagersList() {
+        return "SELECT CONCAT(first_name, ' ', last_name) AS manager FROM employee WHERE manager_id IS NULL";
     }
 }
 
