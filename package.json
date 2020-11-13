@@ -4,7 +4,7 @@
   "description": "A command line application that manages a company's departments and employees as well as their roles",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
