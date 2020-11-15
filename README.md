@@ -7,7 +7,7 @@ This is a command line application that manages a company's departments, roles, 
 Based off of the selected choice, the user may be shown the specific company data in a table or may be prompted with more questions to answer for creating or updating new data. If the user is all done, they can select the "I am finished" option and close out the application.
 
 * Demo:
-* For a better view: [Link to video](https://drive.google.com/file/d/1g7KKf6iIXkMMmJ9v6PsuagIOjQLJw6x-/view)
+* For a better view: [Link to video](https://drive.google.com/file/d/1PzTgMPbwdr3rHPYsug0qg3pKA_yCfbyb/view)
 
 ![Demo](system-demo.gif)
 
