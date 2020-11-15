@@ -25,11 +25,11 @@ INSERT INTO role (title, salary, department_id) VALUES
 
 -- **NOTE: It is important that the employees' managers are managers in the same department that the employees are being assigned to
 INSERT INTO employee (employee_id, first_name, last_name, role_id, manager_id) VALUES 
-(2, 'Beau', 'Feeney', 1, 1),
 (1, 'Benny', 'McLaughlin', 2, NULL),
-(7, 'Leonor', 'Gerlach', 7, 4),
+(2, 'Beau', 'Feeney', 1, 1),
 (4, 'Brandt', 'Kunze', 8, NULL),
-(6, 'Meggie', 'Weissnat', 3, 8),
+(7, 'Leonor', 'Gerlach', 7, 4),
 (8, 'Keaton', 'Adams', 4, NULL),
-(3, 'Lolita', 'Ruecker', 5, 5),
-(5, 'Sandy', 'Miller', 6, NULL);
+(6, 'Meggie', 'Weissnat', 3, 8),
+(5, 'Sandy', 'Miller', 6, NULL),
+(3, 'Lolita', 'Ruecker', 5, 5);
